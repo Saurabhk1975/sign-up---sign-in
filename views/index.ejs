@@ -1,0 +1,62 @@
+<%- include("../partials/meta") %>
+  <body>
+    <%- include("../partials/navbar") %>
+    <form
+      action="/register"
+      method="post"
+      class="bg-pink-100 ml-[35rem] w-[17rem] mt-[6rem]"
+    >
+      <div>
+        <input
+          type="text"
+          placeholder="enter name"
+          name="name"
+          class="bg-black text-white font-extrabold mt-3"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="enter email"
+          name="email"
+          class="bg-black text-white font-extrabold mt-3"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="enter phone"
+          name="phone"
+          class="bg-black text-white font-extrabold mt-3"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="enter password"
+          name="password"
+          class="bg-black text-white font-extrabold mt-3"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="confirm password"
+          name="confpassword"
+          class="bg-black text-white font-extrabold mt-3"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <button class="bg-red-900 mt-3 ml-[5rem]" type="submit">SUBMIT</button>
+    </form>
+  </body>
+</html>
