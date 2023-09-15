@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const port = 1335;
 const router = require("./router")
+const cookieparser =require("cookie-parser");
 
+
+app.use(cookieparser());
 // data base me data ko save yani engilsh m hi save karne ke liye ye likhna padta hai
 app.use(express.json());
 

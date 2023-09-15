@@ -4,16 +4,27 @@ const user = require("./database");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const cookieparser = require("cookie-parser");
+const auth = require("./authorization");
+
+
 
 
 // this is home page router
 router.get("/", (req, res) => {
   res.render("index");
-  
 });
 
 router.get("/loginn", (req, res) => {
-  res.send(`${req.cookies.jwt}`);
+  /*res.send(`${req.cookies.jwt}`);*/
+   res.render("login")
+});
+
+
+
+
+router.get("/auth",auth, (req, res) => {
+  /*res.send(`${req.cookies.jwt}`);*/
+   res.render("auth")
 });
 
 // user registration page
@@ -27,10 +38,9 @@ router.post("/register", async (req, res) => {
       }
 
       const token = await data.generateToken();
-      console.log("this token is user" + token);
+      console.log("this token is user " + token);
 
       res.cookie("jwt", token);
-
       const savedata = await data.save();
       res.render("login");
     } else {
@@ -50,12 +60,11 @@ router.post("/login", async (req, res) => {
     const checkemail = req.body.email;
     const databasedata = await user.findOne({ email: checkemail });
     const ismatch = await bcrypt.compare(passworduser, databasedata.password);
-    console.log("login page" + ismatch);
+    console.log("login page " + ismatch);
     if (ismatch) {
       const token = await databasedata.generateToken();
       res.cookie("jwt", token);
       res.render("contact");
-      //   res.send(`<h1>${databasedata.email}</h1>`)
     } else {
       res.status(400).send("this is not right pls fill correct detail");
     }
@@ -63,5 +72,21 @@ router.post("/login", async (req, res) => {
     res.status(400).send(error);
   }
 });
+/* logout router */
+
+router.get("/logout",auth,async(req,res)=>{
+  try {
+    req.user.tokens=[];
+    res.clearCookie("jwt");
+    await req.user.save();
+    res.render("login");
+  } catch (error) {
+    res.status(400).send(error);
+  }
+})
+
+
+
+
 
 module.exports = router;

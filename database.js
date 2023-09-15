@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const LOCAL_URI = "mongodb://127.0.0.1:27017/loginproject";
+const LOCAL_URI =
+  "mongodb+srv://vickysaurabh545452:saurabh123@cluster0.5qdgv1q.mongodb.net/?retryWrites=true&w=majority";
 mongoose
   .connect(LOCAL_URI)
   .then(() => {
@@ -57,9 +58,10 @@ schema.methods.generateToken = async function () {
 };
 
 schema.pre("save", async function (next) {
-  if(this.isModified("password")){
-  this.password = await bcrypt.hash(this.password, 10);
-   } next();
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
 });
 
 // model bn rha hai database me
